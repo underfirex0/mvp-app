@@ -87,6 +87,15 @@ export default function Browse() {
 
     const from = p * PAGE_SIZE;
     const { data, count: c } = await query
+      // surface data-rich rows first -- otherwise the most recently
+      // inserted rows (often the sparsest source, leads_agricole) show up
+      // first just because they were written last, which isn't useful for
+      // browsing. nullsFirst:false pushes filled values to the top of each
+      // tiebreak column, in rough order of how commonly each is filled.
+      .order("phone_1", { ascending: false, nullsFirst: false })
+      .order("ice", { ascending: false, nullsFirst: false })
+      .order("email", { ascending: false, nullsFirst: false })
+      .order("city", { ascending: false, nullsFirst: false })
       .order("created_at", { ascending: false })
       .range(from, from + PAGE_SIZE - 1);
 
