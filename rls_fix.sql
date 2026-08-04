@@ -25,6 +25,9 @@ CREATE POLICY "public read access" ON company_taxonomy
 CREATE POLICY "public read access" ON company_field_sources
   FOR SELECT USING (true);
 
+CREATE POLICY "public read access" ON company_contacts
+  FOR SELECT USING (true);
+
 -- Confirm: this grants READ only. No INSERT/UPDATE/DELETE policy exists for
 -- anon/authenticated on any of these tables -- the pipeline's writes still
 -- go through the service-role key, which bypasses RLS entirely and is
